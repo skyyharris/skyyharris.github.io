@@ -14,10 +14,14 @@ var score = 0; // variable to keep track of the score
 var started = false; // variable to keep track of whether the game has started
 
 // TODO 4, Part 1: Create the apple variable
-
+apple.element = $("<div>").addClass("apple").appendTo(board);
 
 // TODO 5, Part 1: Create the snake variable
-
+snake.body = [];
+makeSnakeSquare(10, 10);
+makeSnakeSquare(10, 9);
+makeSnakeSquare(10, 8);
+snake.head = snake.body[0];
 
 // Constant Variables
 var ROWS = 20;
@@ -54,7 +58,7 @@ function init() {
 
 
   // TODO 6, Part 1: Initialize the interval
-
+updateInterval = setInterval(update, 100);
 
 }
 
