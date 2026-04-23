@@ -12,19 +12,10 @@ var highScoreElement = $("#highScore");
 // Game Variables
 var score = 0; // variable to keep track of the score
 var started = false; // variable to keep track of whether the game has started
-
 // TODO 4, Part 1: Create the apple variable
-apple.element = $("<div>").addClass("apple").appendTo(board);
 var apple = {};
 
-
-
 // TODO 5, Part 1: Create the snake variable
-snake.body = [];
-makeSnakeSquare(10, 10);
-makeSnakeSquare(10, 9);
-makeSnakeSquare(10, 8);
-snake.head = snake.body[0];
 var snake = {};
 
 // Constant Variables
@@ -56,7 +47,8 @@ init();
 
 function init() {
   // TODO 5, Part 2: initialize the snake
-  makeSnakeSquare(10, 10); // Create the first square in the middle of the board
+  snake.body = []; // Start with an empty body
+makeSnakeSquare(10, 10); // Create the first square in the middle of the board
 makeSnakeSquare(10, 9); // Create a second square to the left of the first
 makeSnakeSquare(10, 8); // Create a third square to the left of the second
 snake.head = snake.body[0]; // Mark the first segment as the head
@@ -65,9 +57,8 @@ snake.head = snake.body[0]; // Mark the first segment as the head
   // TODO 4, Part 3: initialize the apple
 makeApple();
 
-
   // TODO 6, Part 1: Initialize the interval
-updateInterval = setInterval(update, 100);
+updateInterval = setInterval(update, 250);
 
 }
 
@@ -80,43 +71,34 @@ updateInterval = setInterval(update, 100);
  * collisions with the walls.
  */
 function update() {
-  // TODO 6, Part 2: Fill in the update function's code block
-
-
-       if (started) {
-  moveSnake();
-}
-
+  console.log("updating...");
+ 
 
 if (hasHitWall() || hasCollidedWithSnake()) {
   endGame();
 }
 
-
+if (hasCollidedWithApple()) {
+  handleAppleCollision();
+}
+  // TODO 6, Part 2: Fill in the update function's code block
+if (started)  {
+  moveSnake();
+}
+if (hasHitWall() ||  hasCollidedWithSnake()) {
+  endGame();
+}
 if (hasCollidedWithApple()) {
   handleAppleCollision();
 }
 
 
 
-
-
-
-
-
 }
-
-
-
-
-
-
-
 
 function checkForNewDirection(event) {
   /* 
   TODO 7: Update snake.head.direction based on the value of activeKey.
-  
   BONUS: Only allow direction changes to take place if the new direction is
   perpendicular to the current direction
   */
@@ -124,9 +106,6 @@ function checkForNewDirection(event) {
   if (activeKey === KEY.LEFT) {
     snake.head.direction = "left";
   }
-  }
-
-
   else if (activeKey === KEY.RIGHT) {
     snake.head.direction = "right";
   }
@@ -169,6 +148,7 @@ function moveSnake() {
     HINT: The snake's head will need to move forward 1 square based on the value
     of snake.head.direction which may be one of "left", "right", "up", or "down"
   */
+  
 for (var i = snake.body.length - 1; i > 0; i--) {
     var currentSnakeSquare = snake.body[i];
     var snakeSquareInFront = snake.body[i-1];
@@ -207,10 +187,6 @@ repositionSquare(snake.head);
 }
 
 
-
-
-
-
 // TODO 9: Create a new helper function
 function moveBodyAToBodyB(bodyA, bodyB){
 
@@ -219,15 +195,6 @@ function moveBodyAToBodyB(bodyA, bodyB){
   bodyA.column = bodyB.column;
   bodyA.direction = bodyB.direction;
 }
-
-
-
-
-
-
-function hasHitWall() {
-
-
 
 
 
@@ -313,26 +280,18 @@ function endGame() {
 function makeApple() {
   // TODO 4, Part 2: Fill in this function's code block
 
-
 // make the apple jQuery Object and append it to the board
 apple.element = $("<div>").addClass("apple").appendTo(board);
 
-
 // get a random available row/column on the board
 var randomPosition = getRandomAvailablePosition();
-
 
 // initialize the row/column properties on the Apple Object
 apple.row = randomPosition.row;
 apple.column = randomPosition.column;
 
-
 // position the apple on the screen
 repositionSquare(apple);
-
-
-
-
 
 }
 
@@ -365,6 +324,10 @@ if (snake.body.length === 0) {
 }
 
 
+// add the square to the snake’s body and update the tail
+snake.body.push(snakeSquare);
+snake.tail = snakeSquare;
+
 
 
 }
@@ -384,19 +347,6 @@ function handleKeyDown(event) {
   // TODO 7: make the handleKeyDown function register which key is pressed
 activeKey = event.which;
 console.log(activeKey);
-
-
-  // If a valid direction key is pressed, start the game
-  if (
-    event.which === KEY.LEFT ||
-    event.which === KEY.RIGHT ||
-    event.which === KEY.UP ||
-    event.which === KEY.DOWN
-  ) {
-    started = true; // the game starts when the first key is pressed
-  }
-}
-
 
   // If a valid direction key is pressed, start the game
   if (
@@ -461,3 +411,4 @@ function calculateHighScore() {
 
   return highScore;
 }
+
