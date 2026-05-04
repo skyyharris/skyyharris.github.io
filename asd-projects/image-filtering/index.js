@@ -82,3 +82,6 @@ pixelArray[BLUE] = keepInBounds(newBlue);
 function increaseGreenByBlue(pixelArray) {
 var newGreen = pixelArray[GREEN] + pixelArray[BLUE];
 pixelArray[GREEN] = keepInBounds(newGreen);
+}
+	
+
