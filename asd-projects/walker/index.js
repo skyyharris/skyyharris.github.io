@@ -131,6 +131,19 @@ else{}
 
  
   function wallCollision() {
-   
+   if(walker.x < 0 ){
+    walker.x -= walker.speedX;
+   }
+   if(walker.y < 0 ){
+    walker.y -= walker.speedY;
+   }
+   if(walker.x > $ ("#board").width()-50){
+    walker.x -= walker.speedX;
+   }
+   if(walker.y > $ ("#board").height()-50){
+    walker.y -=walker.speedY;
+   }
+   // stop the interval timer
+   //clearInterval(interval);
   }
 }
