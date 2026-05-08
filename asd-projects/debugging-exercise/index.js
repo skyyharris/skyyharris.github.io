@@ -159,11 +159,13 @@ function bounceGhost(ghost) {
 
 // this redraws the ghost's position on the screen
 function updateGhostOnScreen(ghost) {
-  maxGhosts = 1;
+  maxGhosts = 10;
 
   // these lines redraw the ghost's position
   $(ghost.id).css("left", ghost.x);
   $(ghost.id).css("top", ghost.y);
+  $(ghost.id).css("right", ghost.x);
+  $(ghost.id).css("bottom", ghost.y);
 
   // these lines add a glow around the ghost
   $(ghost.id).css("transition", "left 0.2s linear, top 0.2s linear, filter 0.2s");
